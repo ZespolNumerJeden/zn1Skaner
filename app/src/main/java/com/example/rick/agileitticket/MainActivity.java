@@ -31,7 +31,10 @@ public class MainActivity extends Activity implements OnClickListener {
         contentTxt = (TextView)findViewById(R.id.scan_content);
         timeTxt = (TextView)findViewById(R.id.time_content);
         scanBtn.setOnClickListener(this);
-
+        Calendar c = Calendar.getInstance();
+        SimpleDateFormat dateformat = new SimpleDateFormat("dd-MMM-yyyy hh:mm:ss aa");
+        String datetime = dateformat.format(c.getTime());
+        timeTxt.setText("Czas: " + datetime);
 
     }
 
@@ -42,6 +45,11 @@ public class MainActivity extends Activity implements OnClickListener {
             IntentIntegrator scanIntegrator = new IntentIntegrator(this);
             scanIntegrator.initiateScan();
         }
+        if(v.getId()==R.id.cancel_button){
+            formatTxt.setText("Skanuj kod, aby pobrać dane uczestnika");
+            contentTxt.setText("");
+        }
+
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
@@ -53,10 +61,6 @@ public class MainActivity extends Activity implements OnClickListener {
             String scanFormat = scanningResult.getFormatName();
             formatTxt.setText("Uczestnik: " + scanFormat);
             contentTxt.setText("Panel: " + scanContent);
-            Calendar c = Calendar.getInstance();
-            SimpleDateFormat dateformat = new SimpleDateFormat("dd-MMM-yyyy hh:mm:ss aa");
-            String datetime = dateformat.format(c.getTime());
-            timeTxt.setText("Czas: " + datetime);
 
         }
         else{

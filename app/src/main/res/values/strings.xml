@@ -3,6 +3,7 @@
     <string name="scan">Skanuj</string>
     <string name="cancel">Anuluj</string>
     <string name="accept">Obecny</string>
+    <string name="user_data_label">Dane uczestnika:</string>
     <string name="codeError">Błąd skanowania</string>
     <string name="codeEmpty">Nie znaleziono biletu</string>
 </resources>
