@@ -4,6 +4,9 @@
     <string name="cancel">Anuluj</string>
     <string name="accept">Obecny</string>
     <string name="user_data_label">Dane uczestnika:</string>
+    <string name="user_data_label_scan">Skanuj kod, aby pobrać dane uczestnika</string>
     <string name="codeError">Błąd skanowania</string>
     <string name="codeEmpty">Nie znaleziono biletu</string>
+    <string name="codeAccepted">Oznaczono obecność uczestnika</string>
+    <string name="codeAlreadyPresent">Uczestnik już oznaczył swoją obecność</string>
 </resources>

@@ -19,7 +19,7 @@ import java.util.Calendar;
 public class MainActivity extends Activity implements OnClickListener {
 
     private Button scanBtn;
-    private TextView formatTxt, contentTxt, timeTxt;
+    private TextView scanTxt, formatTxt, contentTxt, timeTxt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,9 +27,13 @@ public class MainActivity extends Activity implements OnClickListener {
         Fabric.with(this, new Crashlytics(), new CrashlyticsNdk());
         setContentView(R.layout.activity_main);
         scanBtn = (Button)findViewById(R.id.scan_button);
+        scanTxt = (TextView)findViewById(R.id.user_data_label);
         formatTxt = (TextView)findViewById(R.id.scan_format);
         contentTxt = (TextView)findViewById(R.id.scan_content);
         timeTxt = (TextView)findViewById(R.id.time_content);
+        scanTxt.setText(getString(R.string.user_data_label_scan));
+        formatTxt.setText("");
+        contentTxt.setText("");
         scanBtn.setOnClickListener(this);
         Calendar c = Calendar.getInstance();
         SimpleDateFormat dateformat = new SimpleDateFormat("dd-MMM-yyyy hh:mm:ss aa");
@@ -46,7 +50,8 @@ public class MainActivity extends Activity implements OnClickListener {
             scanIntegrator.initiateScan();
         }
         if(v.getId()==R.id.cancel_button){
-            formatTxt.setText("Skanuj kod, aby pobrać dane uczestnika");
+            scanTxt.setText(getString(R.string.user_data_label_scan));
+            formatTxt.setText("");
             contentTxt.setText("");
         }
 
@@ -59,13 +64,14 @@ public class MainActivity extends Activity implements OnClickListener {
 //we have a result
             String scanContent = scanningResult.getContents();
             String scanFormat = scanningResult.getFormatName();
+            scanTxt.setText(getString(R.string.user_data_label));
             formatTxt.setText("Uczestnik: " + scanFormat);
             contentTxt.setText("Panel: " + scanContent);
 
         }
         else{
             Toast toast = Toast.makeText(getApplicationContext(),
-                    "Brak danych!", Toast.LENGTH_SHORT);
+                    getString(R.string.codeError), Toast.LENGTH_SHORT);
             toast.show();
         }
     }
