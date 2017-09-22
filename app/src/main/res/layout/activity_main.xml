@@ -6,6 +6,7 @@
     android:layout_height="match_parent">
 
     <LinearLayout
+        android:id="@+id/logotyp_layout"
         android:orientation="vertical"
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
@@ -21,7 +22,7 @@
             android:layout_weight="0.6"
             android:background="@android:color/background_light"
             android:visibility="visible"
-            app:srcCompat="@drawable/logo" />
+            android:src="@drawable/logo" />
 
         <Button
             android:id="@+id/scan_button"
@@ -31,11 +32,12 @@
             android:layout_centerHorizontal="true"
             android:layout_weight="0.4"
             android:onClick="onClick"
-            android:style="@drawable/rounded_button"
             android:text="@string/scan" />
+
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/data_layout"
         android:orientation="vertical"
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
@@ -88,12 +90,14 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/afterScan_layout"
         android:orientation="horizontal"
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         android:layout_alignParentBottom="true"
         android:layout_weight="0.15"
-        android:layout_gravity="bottom">
+        android:layout_gravity="bottom"
+        android:visibility="invisible">
         <Button
             android:id="@+id/cancel_button"
             style="@style/Widget.AppCompat.Button.Colored"
