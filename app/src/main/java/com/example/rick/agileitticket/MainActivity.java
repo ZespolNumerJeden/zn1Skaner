@@ -29,26 +29,48 @@ public class MainActivity extends Activity implements OnClickListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Fabric.with(this, new Crashlytics(), new CrashlyticsNdk());
-        setContentView(R.layout.activity_main);
-        afterScanLayout = (View) findViewById(R.id.afterScan_layout);
-        scanBtn = (Button)findViewById(R.id.scan_button);
-        cancelBtn = (Button)findViewById(R.id.cancel_button);
-        approveBtn = (Button)findViewById(R.id.approve_button);
-        scanTxt = (TextView)findViewById(R.id.user_data_label);
-        formatTxt = (TextView)findViewById(R.id.scan_format);
-        contentTxt = (TextView)findViewById(R.id.scan_content);
-        timeTxt = (TextView)findViewById(R.id.time_content);
-        scanTxt.setText(getString(R.string.user_data_label_scan));
-        formatTxt.setText("");
-        contentTxt.setText("");
-        scanBtn.setOnClickListener(this);
-        cancelBtn.setOnClickListener(this);
-        approveBtn.setOnClickListener(this);
+
         Calendar c = Calendar.getInstance();
         SimpleDateFormat dateformat = new SimpleDateFormat("dd-MMM-yyyy hh:mm:ss aa");
         String datetime = dateformat.format(c.getTime());
+
+        setContentView(R.layout.activity_main);
+        afterScanLayout = (View) findViewById(R.id.afterScan_layout);
+        View root = afterScanLayout.getRootView();
+        root.setBackgroundColor(getResources().getColor(R.color.backgroundDefault));
+
+        scanBtn = (Button)findViewById(R.id.scan_button);
+        scanBtn.setTextColor(getResources().getColor(R.color.textDefault));
+       // scanBtn.setBackgroundColor(getResources().getColor(R.color.backgroundDefault));
+        scanBtn.setOnClickListener(this);
+
+        cancelBtn = (Button)findViewById(R.id.cancel_button);
+        cancelBtn.setTextColor(getResources().getColor(R.color.textDefault));
+       // cancelBtn.setBackgroundColor(getResources().getColor(R.color.backgroundDefault));
+        cancelBtn.setOnClickListener(this);
+
+        approveBtn = (Button)findViewById(R.id.approve_button);
+        approveBtn .setTextColor(getResources().getColor(R.color.textDefault));
+       // approveBtn.setBackgroundColor(getResources().getColor(R.color.backgroundDefault));
+        approveBtn.setOnClickListener(this);
+
+        scanTxt = (TextView)findViewById(R.id.user_data_label);
+        scanTxt .setTextColor(getResources().getColor(R.color.textDefault));
+
+        formatTxt = (TextView)findViewById(R.id.scan_format);
+        formatTxt.setTextColor(getResources().getColor(R.color.textDefault));
+        formatTxt.setText("");
+
+        contentTxt = (TextView)findViewById(R.id.scan_content);
+        contentTxt.setTextColor(getResources().getColor(R.color.textDefault));
+        contentTxt.setText("");
+
+        timeTxt = (TextView)findViewById(R.id.time_content);
+        timeTxt .setTextColor(getResources().getColor(R.color.textDefault));
         timeTxt.setText("Czas: " + datetime);
 
+        scanTxt.setText(getString(R.string.user_data_label_scan));
+        scanTxt.setTextColor(getResources().getColor(R.color.textAlert));
     }
 
     public void onClick(View v){
@@ -60,16 +82,22 @@ public class MainActivity extends Activity implements OnClickListener {
             scanBtn.setVisibility(View.INVISIBLE);
 
             scanTxt.setText(getString(R.string.user_data_label));  //temporary for test
+            scanTxt .setTextColor(getResources().getColor(R.color.textDefault));
+
             formatTxt.setText("Uczestnik: Jan Kowalski");  //temporary for test
             contentTxt.setText("Panel: Wykład Profesora Mrożka");  //temporary for test
+
             afterScanLayout.setVisibility(View.VISIBLE); //temporary for test
 
         }
 
         if(v.getId()==R.id.cancel_button){
             scanTxt.setText(getString(R.string.user_data_label_scan));
+            scanTxt .setTextColor(getResources().getColor(R.color.textAlert));
+
             formatTxt.setText("");
             contentTxt.setText("");
+
             afterScanLayout.setVisibility(View.INVISIBLE);
             scanBtn.setVisibility(View.VISIBLE);
         }
@@ -78,9 +106,13 @@ public class MainActivity extends Activity implements OnClickListener {
             Toast toast = Toast.makeText(getApplicationContext(),
                     getString(R.string.codeAccepted), Toast.LENGTH_SHORT);
             toast.show();
+
             scanTxt.setText(getString(R.string.user_data_label_scan));
+            scanTxt.setTextColor(getResources().getColor(R.color.textAlert));
+
             formatTxt.setText("");
             contentTxt.setText("");
+
             afterScanLayout.setVisibility(View.INVISIBLE);
             scanBtn.setVisibility(View.VISIBLE);
         }
@@ -94,9 +126,11 @@ public class MainActivity extends Activity implements OnClickListener {
 //we have a result
             String scanContent = scanningResult.getContents();
             String scanFormat = scanningResult.getFormatName();
+
             scanTxt.setText(getString(R.string.user_data_label));
             formatTxt.setText("Uczestnik: " + scanFormat);
             contentTxt.setText("Panel: " + scanContent);
+
             afterScanLayout.setVisibility(View.VISIBLE);
         }
         else{
