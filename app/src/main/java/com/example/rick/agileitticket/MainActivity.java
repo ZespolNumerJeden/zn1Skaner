@@ -1,6 +1,7 @@
 package com.example.rick.agileitticket;
 
-import android.icu.text.SimpleDateFormat;
+//import android.icu.text.SimpleDateFormat;
+import java.text.SimpleDateFormat;
 import android.os.Bundle;
 import com.crashlytics.android.Crashlytics;
 import com.crashlytics.android.ndk.CrashlyticsNdk;
@@ -11,7 +12,6 @@ import android.content.Intent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import io.fabric.sdk.android.Fabric;
@@ -57,6 +57,11 @@ public class MainActivity extends Activity implements OnClickListener {
 //scan
             IntentIntegrator scanIntegrator = new IntentIntegrator(this);
             scanIntegrator.initiateScan();
+            scanBtn.setVisibility(View.INVISIBLE);
+
+            scanTxt.setText(getString(R.string.user_data_label));  //temporary for test
+            formatTxt.setText("Uczestnik: Jan Kowalski");  //temporary for test
+            contentTxt.setText("Panel: Wykład Profesora Mrożka");  //temporary for test
             afterScanLayout.setVisibility(View.VISIBLE); //temporary for test
 
         }
@@ -66,6 +71,7 @@ public class MainActivity extends Activity implements OnClickListener {
             formatTxt.setText("");
             contentTxt.setText("");
             afterScanLayout.setVisibility(View.INVISIBLE);
+            scanBtn.setVisibility(View.VISIBLE);
         }
 
         if(v.getId()==R.id.approve_button){
@@ -76,6 +82,7 @@ public class MainActivity extends Activity implements OnClickListener {
             formatTxt.setText("");
             contentTxt.setText("");
             afterScanLayout.setVisibility(View.INVISIBLE);
+            scanBtn.setVisibility(View.VISIBLE);
         }
 
     }

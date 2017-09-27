@@ -26,9 +26,8 @@
 
         <Button
             android:id="@+id/scan_button"
-            style="@style/Widget.AppCompat.Button.Colored"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="60dp"
             android:layout_centerHorizontal="true"
             android:layout_weight="0.4"
             android:onClick="onClick"
@@ -41,7 +40,7 @@
         android:orientation="vertical"
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
-        android:layout_weight="0.5"
+        android:layout_weight="0.35"
         android:layout_centerInParent="true">
 
         <TextView
@@ -95,23 +94,21 @@
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         android:layout_alignParentBottom="true"
-        android:layout_weight="0.15"
+        android:layout_weight="0.3"
         android:layout_gravity="bottom"
         android:visibility="invisible">
         <Button
             android:id="@+id/cancel_button"
-            style="@style/Widget.AppCompat.Button.Colored"
             android:layout_width="0sp"
+            android:layout_height="60dp"
             android:layout_weight="0.5"
-            android:layout_height="wrap_content"
             android:onClick="onClick"
             android:text="@string/cancel" />
         <Button
             android:id="@+id/approve_button"
-            style="@style/Widget.AppCompat.Button.Colored"
             android:layout_width="0sp"
             android:layout_weight="0.5"
-            android:layout_height="wrap_content"
+            android:layout_height="60dp"
             android:text="@string/accept" />
     </LinearLayout>
 
