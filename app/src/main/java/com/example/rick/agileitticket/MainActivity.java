@@ -20,7 +20,7 @@ import java.util.Calendar;
 public class MainActivity extends Activity implements OnClickListener {
 
     private Button scanBtn, cancelBtn, approveBtn;
-    private TextView scanTxt, formatTxt, contentTxt, timeTxt;
+    private TextView formatTxt, contentTxt, timeTxt, scanTxt, allRightsTxt;
     private View afterScanLayout;
 
 
@@ -37,25 +37,26 @@ public class MainActivity extends Activity implements OnClickListener {
         setContentView(R.layout.activity_main);
         afterScanLayout = (View) findViewById(R.id.afterScan_layout);
         View root = afterScanLayout.getRootView();
-        root.setBackgroundColor(getResources().getColor(R.color.backgroundDefault));
+        root.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
 
         scanBtn = (Button)findViewById(R.id.scan_button);
-        scanBtn.setTextColor(getResources().getColor(R.color.textDefault));
-       // scanBtn.setBackgroundColor(getResources().getColor(R.color.backgroundDefault));
+        scanBtn.setTextColor(getResources().getColor(R.color.buttonTextDefault));
+        //scanBtn.setBackgroundColor(getResources().getColor(R.color.buttonDefault));
         scanBtn.setOnClickListener(this);
 
         cancelBtn = (Button)findViewById(R.id.cancel_button);
-        cancelBtn.setTextColor(getResources().getColor(R.color.textDefault));
-       // cancelBtn.setBackgroundColor(getResources().getColor(R.color.backgroundDefault));
+        cancelBtn.setTextColor(getResources().getColor(R.color.buttonTextBlack));
+        //cancelBtn.setBackgroundColor(getResources().getColor(R.color.buttonDefault));
         cancelBtn.setOnClickListener(this);
 
         approveBtn = (Button)findViewById(R.id.approve_button);
-        approveBtn .setTextColor(getResources().getColor(R.color.textDefault));
-       // approveBtn.setBackgroundColor(getResources().getColor(R.color.backgroundDefault));
+        approveBtn.setTextColor(getResources().getColor(R.color.buttonTextDefault));
+        //approveBtn.setBackgroundColor(getResources().getColor(R.color.buttonDefault));
         approveBtn.setOnClickListener(this);
 
         scanTxt = (TextView)findViewById(R.id.user_data_label);
-        scanTxt .setTextColor(getResources().getColor(R.color.textDefault));
+        scanTxt.setText(getString(R.string.user_data_label_scan));
+        scanTxt.setTextColor(getResources().getColor(R.color.textAlert));
 
         formatTxt = (TextView)findViewById(R.id.scan_format);
         formatTxt.setTextColor(getResources().getColor(R.color.textDefault));
@@ -66,11 +67,13 @@ public class MainActivity extends Activity implements OnClickListener {
         contentTxt.setText("");
 
         timeTxt = (TextView)findViewById(R.id.time_content);
-        timeTxt .setTextColor(getResources().getColor(R.color.textDefault));
+        timeTxt.setTextColor(getResources().getColor(R.color.textDefault));
         timeTxt.setText("Czas: " + datetime);
 
-        scanTxt.setText(getString(R.string.user_data_label_scan));
-        scanTxt.setTextColor(getResources().getColor(R.color.textAlert));
+        allRightsTxt = (TextView)findViewById(R.id.footer);
+        allRightsTxt.setTextColor(getResources().getColor(R.color.textDefault));
+        allRightsTxt.setText(getString(R.string.allRights));
+
     }
 
     public void onClick(View v){
@@ -82,7 +85,7 @@ public class MainActivity extends Activity implements OnClickListener {
             scanBtn.setVisibility(View.INVISIBLE);
 
             scanTxt.setText(getString(R.string.user_data_label));  //temporary for test
-            scanTxt .setTextColor(getResources().getColor(R.color.textDefault));
+            scanTxt.setTextColor(getResources().getColor(R.color.textDefault));
 
             formatTxt.setText("Uczestnik: Jan Kowalski");  //temporary for test
             contentTxt.setText("Panel: Wykład Profesora Mrożka");  //temporary for test
@@ -93,7 +96,7 @@ public class MainActivity extends Activity implements OnClickListener {
 
         if(v.getId()==R.id.cancel_button){
             scanTxt.setText(getString(R.string.user_data_label_scan));
-            scanTxt .setTextColor(getResources().getColor(R.color.textAlert));
+            scanTxt.setTextColor(getResources().getColor(R.color.textAlert));
 
             formatTxt.setText("");
             contentTxt.setText("");
@@ -127,9 +130,15 @@ public class MainActivity extends Activity implements OnClickListener {
             String scanContent = scanningResult.getContents();
             String scanFormat = scanningResult.getFormatName();
 
-            scanTxt.setText(getString(R.string.user_data_label));
-            formatTxt.setText("Uczestnik: " + scanFormat);
-            contentTxt.setText("Panel: " + scanContent);
+            //scanTxt.setText(getString(R.string.user_data_label));
+            //formatTxt.setText("Uczestnik: " + scanFormat);
+            //contentTxt.setText("Panel: " + scanContent);
+
+            scanTxt.setText(getString(R.string.user_data_label));  //temporary for test
+            scanTxt.setTextColor(getResources().getColor(R.color.textDefault));
+
+            formatTxt.setText("Uczestnik: Jan Kowalski");  //temporary for test
+            contentTxt.setText("Panel: Wykład Profesora Mrożka");  //temporary for test
 
             afterScanLayout.setVisibility(View.VISIBLE);
         }
@@ -137,8 +146,15 @@ public class MainActivity extends Activity implements OnClickListener {
             Toast toast = Toast.makeText(getApplicationContext(),
                     getString(R.string.codeError), Toast.LENGTH_SHORT);
             toast.show();
+            scanTxt.setText(getString(R.string.user_data_label_scan));
+            scanTxt.setTextColor(getResources().getColor(R.color.textAlert));
+
+            formatTxt.setText("");
+            contentTxt.setText("");
+
+            afterScanLayout.setVisibility(View.INVISIBLE);
+            scanBtn.setVisibility(View.VISIBLE);
         }
     }
-
 
 }
