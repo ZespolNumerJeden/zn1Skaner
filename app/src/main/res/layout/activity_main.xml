@@ -20,9 +20,8 @@
                 android:layout_above="@+id/data_layout"
                 android:layout_centerHorizontal="true"
                 android:layout_weight="1"
-                android:background="@android:color/background_light"
                 android:visibility="visible"
-                android:src="@drawable/logo" />
+                android:src="@drawable/logo_new" />
 
         </LinearLayout>
 
