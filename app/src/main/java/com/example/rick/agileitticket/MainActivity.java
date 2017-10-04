@@ -37,7 +37,7 @@ public class MainActivity extends Activity implements OnClickListener {
         setContentView(R.layout.activity_main);
         afterScanLayout = (View) findViewById(R.id.afterScan_layout);
         View root = afterScanLayout.getRootView();
-        root.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
+        root.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
 
         scanBtn = (Button)findViewById(R.id.scan_button);
         scanBtn.setTextColor(getResources().getColor(R.color.buttonTextDefault));
