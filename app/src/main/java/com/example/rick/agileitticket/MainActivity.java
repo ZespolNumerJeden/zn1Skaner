@@ -30,10 +30,6 @@ public class MainActivity extends Activity implements OnClickListener {
         super.onCreate(savedInstanceState);
         Fabric.with(this, new Crashlytics(), new CrashlyticsNdk());
 
-        Calendar c = Calendar.getInstance();
-        SimpleDateFormat dateformat = new SimpleDateFormat("dd-MMM-yyyy hh:mm:ss aa");
-        String datetime = dateformat.format(c.getTime());
-
         setContentView(R.layout.activity_main);
         afterScanLayout = (View) findViewById(R.id.afterScan_layout);
         View root = afterScanLayout.getRootView();
@@ -46,7 +42,7 @@ public class MainActivity extends Activity implements OnClickListener {
 
         cancelBtn = (Button)findViewById(R.id.cancel_button);
         cancelBtn.setTextColor(getResources().getColor(R.color.buttonTextBlack));
-        //cancelBtn.setBackgroundColor(getResources().getColor(R.color.buttonDefault));
+        //cancelBtn.setBackgroundColor(getResours().getColor(R.color.buttonDefault));
         cancelBtn.setOnClickListener(this);
 
         approveBtn = (Button)findViewById(R.id.approve_button);
@@ -68,7 +64,7 @@ public class MainActivity extends Activity implements OnClickListener {
 
         timeTxt = (TextView)findViewById(R.id.time_content);
         timeTxt.setTextColor(getResources().getColor(R.color.textDefault));
-        timeTxt.setText("Czas: " + datetime);
+        timeTxt.setText("");
 
         allRightsTxt = (TextView)findViewById(R.id.footer);
         allRightsTxt.setTextColor(getResources().getColor(R.color.textDefault));
@@ -90,6 +86,11 @@ public class MainActivity extends Activity implements OnClickListener {
             formatTxt.setText("Uczestnik: Jan Kowalski");  //temporary for test
             contentTxt.setText("Panel: Wykład Profesora Mrożka");  //temporary for test
 
+            Calendar c = Calendar.getInstance();
+            SimpleDateFormat dateformat = new SimpleDateFormat("dd-MMM-yyyy hh:mm:ss aa");
+            String datetime = dateformat.format(c.getTime());
+            timeTxt.setText("Czas: " + datetime);
+
             afterScanLayout.setVisibility(View.VISIBLE); //temporary for test
 
         }
@@ -100,6 +101,7 @@ public class MainActivity extends Activity implements OnClickListener {
 
             formatTxt.setText("");
             contentTxt.setText("");
+            timeTxt.setText("");
 
             afterScanLayout.setVisibility(View.INVISIBLE);
             scanBtn.setVisibility(View.VISIBLE);
@@ -115,6 +117,7 @@ public class MainActivity extends Activity implements OnClickListener {
 
             formatTxt.setText("");
             contentTxt.setText("");
+            timeTxt.setText("");
 
             afterScanLayout.setVisibility(View.INVISIBLE);
             scanBtn.setVisibility(View.VISIBLE);
@@ -139,6 +142,10 @@ public class MainActivity extends Activity implements OnClickListener {
 
             formatTxt.setText("Uczestnik: Jan Kowalski");  //temporary for test
             contentTxt.setText("Panel: Wykład Profesora Mrożka");  //temporary for test
+            Calendar c = Calendar.getInstance(); //temporary for test
+            SimpleDateFormat dateformat = new SimpleDateFormat("dd-MMM-yyyy hh:mm:ss aa"); //temporary for test
+            String datetime = dateformat.format(c.getTime()); //temporary for test
+            timeTxt.setText("Czas: " + datetime);//temporary for test
 
             afterScanLayout.setVisibility(View.VISIBLE);
         }
@@ -151,6 +158,7 @@ public class MainActivity extends Activity implements OnClickListener {
 
             formatTxt.setText("");
             contentTxt.setText("");
+            timeTxt.setText("");
 
             afterScanLayout.setVisibility(View.INVISIBLE);
             scanBtn.setVisibility(View.VISIBLE);

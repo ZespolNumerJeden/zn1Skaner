@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("com.example.rick.agileitticket", appContext.getPackageName());
+        assertEquals("com.example.rick.guru.gherkin.rick.agileitticket", appContext.getPackageName());
     }
 }
