@@ -21,7 +21,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_weight="1"
                 android:visibility="visible"
-                android:src="@drawable/logo_new" />
+                android:src="@drawable/logo" />
 
         </LinearLayout>
 

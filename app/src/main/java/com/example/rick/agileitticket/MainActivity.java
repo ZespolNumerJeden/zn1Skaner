@@ -21,7 +21,7 @@ public class MainActivity extends Activity implements OnClickListener {
 
     private Button scanBtn, cancelBtn, approveBtn;
     private TextView formatTxt, contentTxt, timeTxt, scanTxt, allRightsTxt;
-    private View afterScanLayout;
+    private View afterScanLayout, logo;
 
 
 
@@ -34,6 +34,9 @@ public class MainActivity extends Activity implements OnClickListener {
         afterScanLayout = (View) findViewById(R.id.afterScan_layout);
         View root = afterScanLayout.getRootView();
         root.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+
+        logo = (View) findViewById(R.id.logotyp_layout);
+        logo.setBackgroundColor(getResources().getColor(R.color.backgroundDefault));
 
         scanBtn = (Button)findViewById(R.id.scan_button);
         scanBtn.setTextColor(getResources().getColor(R.color.buttonTextDefault));
