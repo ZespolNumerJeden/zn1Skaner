@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">AgileItTicket</string>
+    <string name="app_name">Agile IT 3 Ticket System</string>
     <string name="scan">Skanuj</string>
     <string name="cancel">Anuluj</string>
     <string name="accept">Obecny</string>

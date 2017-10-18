@@ -55,7 +55,7 @@ public class MainActivity extends Activity implements OnClickListener {
 
         scanTxt = (TextView)findViewById(R.id.user_data_label);
         scanTxt.setText(getString(R.string.user_data_label_scan));
-        scanTxt.setTextColor(getResources().getColor(R.color.textAlert));
+        scanTxt.setTextColor(getResources().getColor(R.color.buttonTextDefault));
 
         formatTxt = (TextView)findViewById(R.id.scan_format);
         formatTxt.setTextColor(getResources().getColor(R.color.textDefault));
@@ -100,7 +100,7 @@ public class MainActivity extends Activity implements OnClickListener {
 
         if(v.getId()==R.id.cancel_button){
             scanTxt.setText(getString(R.string.user_data_label_scan));
-            scanTxt.setTextColor(getResources().getColor(R.color.textAlert));
+            scanTxt.setTextColor(getResources().getColor(R.color.buttonTextDefault));
 
             formatTxt.setText("");
             contentTxt.setText("");
@@ -116,7 +116,7 @@ public class MainActivity extends Activity implements OnClickListener {
             toast.show();
 
             scanTxt.setText(getString(R.string.user_data_label_scan));
-            scanTxt.setTextColor(getResources().getColor(R.color.textAlert));
+            scanTxt.setTextColor(getResources().getColor(R.color.buttonTextDefault));
 
             formatTxt.setText("");
             contentTxt.setText("");
@@ -157,7 +157,7 @@ public class MainActivity extends Activity implements OnClickListener {
                     getString(R.string.codeError), Toast.LENGTH_SHORT);
             toast.show();
             scanTxt.setText(getString(R.string.user_data_label_scan));
-            scanTxt.setTextColor(getResources().getColor(R.color.textAlert));
+            scanTxt.setTextColor(getResources().getColor(R.color.buttonTextDefault));
 
             formatTxt.setText("");
             contentTxt.setText("");
