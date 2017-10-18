@@ -38,44 +38,67 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
-                android:layout_weight="0.25"
+                android:layout_weight="0.18"
                 android:gravity="center"
                 android:text="@string/user_data_label"
                 android:textAppearance="@style/TextAppearance.AppCompat.Button"
                 android:textIsSelectable="false" />
 
             <TextView
-                android:id="@+id/scan_format"
+                android:id="@+id/scan_person"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/user_data_label"
                 android:layout_centerHorizontal="true"
-                android:layout_weight="0.25"
+                android:layout_weight="0.18"
                 android:gravity="center"
                 android:textAppearance="@style/TextAppearance.AppCompat.Button"
                 android:textIsSelectable="true" />
 
             <TextView
-                android:id="@+id/scan_content"
+                android:id="@+id/scan_company"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/scan_format"
+                android:layout_below="@id/scan_person"
                 android:layout_centerHorizontal="true"
-                android:layout_weight="0.25"
+                android:layout_weight="0.18"
                 android:gravity="center"
                 android:textAppearance="@style/TextAppearance.AppCompat.Button"
                 android:textIsSelectable="true" />
 
             <TextView
-                android:id="@+id/time_content"
+                android:id="@+id/scan_event"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/scan_content"
+                android:layout_below="@id/scan_company"
                 android:layout_centerHorizontal="true"
-                android:layout_weight="0.25"
+                android:layout_weight="0.18"
                 android:gravity="center"
                 android:textAppearance="@style/TextAppearance.AppCompat.Button"
                 android:textIsSelectable="true" />
+
+            <TextView
+                android:id="@+id/scan_time"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/scan_event"
+                android:layout_centerHorizontal="true"
+                android:layout_weight="0.18"
+                android:gravity="center"
+                android:textAppearance="@style/TextAppearance.AppCompat.Button"
+                android:textIsSelectable="true" />
+
+            <TextView
+                android:id="@+id/scan_was_in_past"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/scan_time"
+                android:layout_centerHorizontal="true"
+                android:layout_weight="0.18"
+                android:gravity="center"
+                android:textAppearance="@style/TextAppearance.AppCompat.Button"
+                android:textIsSelectable="true" />
+
         </LinearLayout>
 
 

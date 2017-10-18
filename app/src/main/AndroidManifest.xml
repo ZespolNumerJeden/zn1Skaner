@@ -3,6 +3,7 @@
     package="com.example.rick.agileitticket"
     xmlns:tools="http://schemas.android.com/tools">
     <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 
         <!-- Support Android 2.3+. -->
         <uses-sdk android:minSdkVersion="22" />
@@ -25,17 +26,15 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".SplashActivity"
-            android:theme="@style/SplashTheme">
+            android:theme="@style/SplashTheme"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity">
-            <!--    <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                  <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>-->
+        <activity android:name=".MainActivity"
+            android:screenOrientation="portrait">
         </activity>
 
         <activity android:name="com.journeyapps.barcodescanner.CaptureActivity"
@@ -49,7 +48,5 @@
             android:name="io.fabric.ApiKey"
             android:value="ea1b2163957cedd1b271711e2a2817d6a9094685" />
     </application>
-
-    <uses-permission android:name="android.permission.INTERNET" />
 
 </manifest>
