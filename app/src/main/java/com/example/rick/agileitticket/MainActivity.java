@@ -99,6 +99,20 @@ public class MainActivity extends Activity implements OnClickListener {
             IntentIntegrator scanIntegrator = new IntentIntegrator(this);
             scanIntegrator.initiateScan();
             scanBtn.setVisibility(View.INVISIBLE);
+
+            scanTxt.setText(getString(R.string.user_data_label));  //temporary for test
+            scanTxt.setTextColor(getResources().getColor(R.color.textDefault));//temporary for test
+
+            personTxt.setText("Uczestnik: Jan Kowalski");  //temporary for test
+            companyTxt.setText("Firma: WSB");  //temporary for test
+            panelTxt.setText("Panel: Wykład Profesora Mrożka");  //temporary for test
+            wasInPastTxt.setText("Witaj ponownie!");  //temporary for test
+            Calendar c = Calendar.getInstance(); //temporary for test
+            SimpleDateFormat dateformat = new SimpleDateFormat("dd-MMM-yyyy hh:mm:ss aa"); //temporary for test
+            String datetime = dateformat.format(c.getTime()); //temporary for test
+            timeTxt.setText("Czas: " + datetime);//temporary for test
+
+            afterScanLayout.setVisibility(View.VISIBLE);   //temporary for test
         }
 
         if(v.getId()==R.id.cancel_button){
@@ -301,30 +315,15 @@ public class MainActivity extends Activity implements OnClickListener {
                     getString(R.string.codeError), Toast.LENGTH_SHORT);
             toast.show();
 
-            scanTxt.setText(getString(R.string.user_data_label));  //temporary for test
-            scanTxt.setTextColor(getResources().getColor(R.color.textDefault));//temporary for test
+            scanTxt.setText(getString(R.string.user_data_label_scan));
+            personTxt.setText("");
+            companyTxt.setText("");
+            panelTxt.setText("");
+            wasInPastTxt.setText("");
+            timeTxt.setText("");
 
-            personTxt.setText("Uczestnik: Jan Kowalski");  //temporary for test
-            companyTxt.setText("Firma: WSB");  //temporary for test
-            panelTxt.setText("Panel: Wykład Profesora Mrożka");  //temporary for test
-            wasInPastTxt.setText("");  //temporary for test
-            Calendar c = Calendar.getInstance(); //temporary for test
-            SimpleDateFormat dateformat = new SimpleDateFormat("dd-MMM-yyyy hh:mm:ss aa"); //temporary for test
-            String datetime = dateformat.format(c.getTime()); //temporary for test
-            timeTxt.setText("Czas: " + datetime);//temporary for test
-
-            afterScanLayout.setVisibility(View.VISIBLE);   //temporary for test
-
-            //FOR API PART
-            ////scanTxt.setText(getString(R.string.user_data_label_scan));
-            //personTxt.setText("");
-            //companyTxt.setText("");
-            //panelTxt.setText("");
-            //wasInPastTxt.setText("");
-            //timeTxt.setText("");
-
-            //afterScanLayout.setVisibility(View.INVISIBLE);
-            //scanBtn.setVisibility(View.VISIBLE);
+            afterScanLayout.setVisibility(View.INVISIBLE);
+            scanBtn.setVisibility(View.VISIBLE);
         }
     }
 
