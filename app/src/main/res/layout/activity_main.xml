@@ -3,7 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <include
+        android:id="@+id/tool_bar"
+        layout="@layout/toolbar_layout"
+        ></include>
+
         <LinearLayout
             android:id="@+id/logotyp_layout"
             android:orientation="vertical"
@@ -20,8 +27,7 @@
                 android:layout_above="@+id/data_layout"
                 android:layout_centerHorizontal="true"
                 android:layout_weight="1"
-                android:visibility="visible"
-                android:src="@drawable/logo" />
+                android:visibility="visible"/>
 
         </LinearLayout>
 

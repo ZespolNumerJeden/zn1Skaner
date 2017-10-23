@@ -15,7 +15,10 @@ import com.example.rick.agileitticket.android.IntentIntegrator;
 import com.example.rick.agileitticket.android.IntentResult;
 import android.app.Activity;
 import android.content.Intent;
+import android.support.v7.widget.Toolbar;
 import android.util.JsonReader;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -23,10 +26,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 import io.fabric.sdk.android.Fabric;
 import java.util.Calendar;
-
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.Toolbar;
 import javax.net.ssl.HttpsURLConnection;
 
-public class MainActivity extends Activity implements OnClickListener {
+public class MainActivity extends AppCompatActivity implements OnClickListener {
 
     private Button scanBtn, cancelBtn, approveBtn;
     private TextView scanTxt, personTxt, companyTxt, panelTxt, wasInPastTxt, timeTxt, allRightsTxt;
@@ -36,6 +41,10 @@ public class MainActivity extends Activity implements OnClickListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.tool_bar);
+        setSupportActionBar(myToolbar);
+
         Fabric.with(this, new Crashlytics(), new CrashlyticsNdk());
 
         setContentView(R.layout.activity_main);
@@ -44,7 +53,6 @@ public class MainActivity extends Activity implements OnClickListener {
         root.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
 
         logo = (View) findViewById(R.id.logotyp_layout);
-        logo.setBackgroundColor(getResources().getColor(R.color.backgroundDefault));
 
         scanBtn = (Button)findViewById(R.id.scan_button);
         scanBtn.setTextColor(getResources().getColor(R.color.buttonTextDefault));
@@ -89,6 +97,28 @@ public class MainActivity extends Activity implements OnClickListener {
         allRightsTxt.setTextColor(getResources().getColor(R.color.textDefault));
         allRightsTxt.setText(getString(R.string.allRights));
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.action_scanner) {
+            return true;
+        }
+        if (id == R.id.action_agenda) {
+            return true;
+        }
+                return super.onOptionsItemSelected(item);
+
+        }
+
+
 
 
 

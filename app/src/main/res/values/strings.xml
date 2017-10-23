@@ -1,15 +1,23 @@
 <resources>
-    <string name="app_name">Agile IT 3 Ticket System</string>
+    <!--Application strings-->
+    <string name="app_name">Agile IT 3</string>
     <string name="scan">Skanuj</string>
     <string name="cancel">Anuluj</string>
     <string name="accept">Obecny</string>
     <string name="user_data_label">Dane uczestnika:</string>
     <string name="user_data_label_scan">Skanuj kod, aby pobrać dane uczestnika</string>
+    <string name="welcomeBack">Witamy ponownie!</string>
+    <string name="allRights">Agile IT (c) 2017</string>
+
+    <!--Error strings-->
     <string name="codeError">Błąd skanowania</string>
     <string name="apiError">Nieoczekiwany błąd połączenia z bazą</string>
     <string name="codeEmpty">Nie znaleziono biletu</string>
     <string name="codeAccepted">Oznaczono obecność uczestnika</string>
     <string name="codeAlreadyPresent">Uczestnik już oznaczył swoją obecność</string>
-    <string name="welcomeBack">Witamy ponownie!</string>
-    <string name="allRights">Agile IT (c) 2017</string>
+
+
+    <!--Menu strings-->
+    <string name="scanner_item_name">Skaner</string>
+    <string name="agenda_item_name">Agenda</string>
 </resources>
