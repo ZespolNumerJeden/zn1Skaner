@@ -98,30 +98,6 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
         allRightsTxt.setText(getString(R.string.allRights));
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if (id == R.id.action_scanner) {
-            return true;
-        }
-        if (id == R.id.action_agenda) {
-            return true;
-        }
-                return super.onOptionsItemSelected(item);
-
-        }
-
-
-
-
-
     public void onClick(View v){
 //respond to clicks
         if(v.getId()==R.id.scan_button) {

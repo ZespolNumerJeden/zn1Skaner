@@ -18,6 +18,7 @@
 
 
     <!--Menu strings-->
+    <string name="back_item_name">Wstecz</string>
     <string name="scanner_item_name">Skaner</string>
     <string name="agenda_item_name">Agenda</string>
 </resources>

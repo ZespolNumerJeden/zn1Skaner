@@ -7,14 +7,16 @@
     <!-- "Mark Favorite", should appear as action button if possible -->
     <item
         android:id="@+id/action_scanner"
-        android:title="@string/scanner_item_name"
-        android:orderInCategory="100"
-        app:showAsAction="ifRoom"/>
+        app:showAsAction ="always"
+        android:icon="@drawable/barcode_icon"
+        android:onClick="openScanner"
+        android:title="@string/scanner_item_name"/>
 
     <!-- Settings, should always be in the overflow -->
     <item android:id="@+id/action_agenda"
-        android:title="@string/agenda_item_name"
-        android:orderInCategory="200"
-        app:showAsAction="ifRoom"/>
+        app:showAsAction ="always"
+        android:icon="@drawable/agenda_icon"
+        android:onClick="openAgenda"
+        android:title="@string/agenda_item_name"/>
 
 </menu>
