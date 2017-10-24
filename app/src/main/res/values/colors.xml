@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#0088aa</color>
+    <color name="colorPrimary">#1D3E72</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
     <color name="textDefault">#ffffff</color>
     <color name="textAlert">#f44842</color>
     <color name="backgroundDefault">#ffffff</color>
-    <color name="buttonDefault">#458b00</color>
+    <color name="buttonDefault">#3EA335</color>
     <color name="buttonTextDefault">#ffffff</color>
     <color name="buttonTextBlack">#000</color>
     <color name="backgroundIT">#1d3e72</color>
+    <color name="lightGrey">#CDCCCC</color>
 </resources>

@@ -1,6 +1,5 @@
 package com.example.rick.agileitticket;
 
-//import android.icu.text.SimpleDateFormat;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
@@ -15,9 +14,11 @@ import com.example.rick.agileitticket.android.IntentIntegrator;
 import com.example.rick.agileitticket.android.IntentResult;
 import android.app.Activity;
 import android.content.Intent;
+import android.support.v7.view.ActionMode;
 import android.support.v7.widget.Toolbar;
 import android.util.JsonReader;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -42,7 +43,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar myToolbar = (Toolbar) findViewById(R.id.tool_bar);
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.main_tool_bar);
         setSupportActionBar(myToolbar);
 
         Fabric.with(this, new Crashlytics(), new CrashlyticsNdk());
@@ -52,54 +53,57 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
         View root = afterScanLayout.getRootView();
         root.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
 
-        logo = (View) findViewById(R.id.logotyp_layout);
-
         scanBtn = (Button)findViewById(R.id.scan_button);
-        scanBtn.setTextColor(getResources().getColor(R.color.buttonTextDefault));
-        //scanBtn.setBackgroundColor(getResources().getColor(R.color.buttonDefault));
         scanBtn.setOnClickListener(this);
 
         cancelBtn = (Button)findViewById(R.id.cancel_button);
         cancelBtn.setTextColor(getResources().getColor(R.color.buttonTextBlack));
-        //cancelBtn.setBackgroundColor(getResours().getColor(R.color.buttonDefault));
         cancelBtn.setOnClickListener(this);
 
         approveBtn = (Button)findViewById(R.id.approve_button);
-        approveBtn.setTextColor(getResources().getColor(R.color.buttonTextDefault));
-        //approveBtn.setBackgroundColor(getResources().getColor(R.color.buttonDefault));
         approveBtn.setOnClickListener(this);
 
         scanTxt = (TextView)findViewById(R.id.user_data_label);
-        scanTxt.setText(getString(R.string.user_data_label_scan));
-        scanTxt.setTextColor(getResources().getColor(R.color.buttonTextDefault));
-
         personTxt = (TextView)findViewById(R.id.scan_person);
-        personTxt.setTextColor(getResources().getColor(R.color.textDefault));
-        personTxt.setText("");
-
         companyTxt = (TextView)findViewById(R.id.scan_company);
-        companyTxt.setTextColor(getResources().getColor(R.color.textDefault));
-        companyTxt.setText("");
-
         panelTxt = (TextView)findViewById(R.id.scan_event);
-        panelTxt.setTextColor(getResources().getColor(R.color.textDefault));
-        panelTxt.setText("");
-
         wasInPastTxt = (TextView)findViewById(R.id.scan_was_in_past);
-        wasInPastTxt.setTextColor(getResources().getColor(R.color.textDefault));
-        wasInPastTxt.setText("");
-
         timeTxt = (TextView)findViewById(R.id.scan_time);
-        timeTxt.setTextColor(getResources().getColor(R.color.textDefault));
-        timeTxt.setText("");
 
         allRightsTxt = (TextView)findViewById(R.id.footer);
-        allRightsTxt.setTextColor(getResources().getColor(R.color.textDefault));
+        scanTxt.setText(getString(R.string.user_data_label_scan));
+        personTxt.setText("");
+        companyTxt.setText("");
+        panelTxt.setText("");
+        wasInPastTxt.setText("");
+        timeTxt.setText("");
         allRightsTxt.setText(getString(R.string.allRights));
+    }
+
+   @Override
+   public boolean onCreateOptionsMenu(Menu menu) {
+      getMenuInflater().inflate(R.menu.main_menu, menu);
+      return super.onCreateOptionsMenu(menu);
+   }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_agenda:
+                Intent i = new Intent(MainActivity.this,AgendaActivity.class);
+                startActivity(i);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     public void onClick(View v){
 //respond to clicks
+        if (v.getId()==R.id.agenda_button){
+            Intent intent = new Intent(getApplicationContext(), AgendaActivity.class);
+            startActivity(intent);
+        }
         if(v.getId()==R.id.scan_button) {
 //scan
             IntentIntegrator scanIntegrator = new IntentIntegrator(this);
@@ -107,8 +111,6 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
             scanBtn.setVisibility(View.INVISIBLE);
 
             scanTxt.setText(getString(R.string.user_data_label));  //temporary for test
-            scanTxt.setTextColor(getResources().getColor(R.color.textDefault));//temporary for test
-
             personTxt.setText("Uczestnik: Jan Kowalski");  //temporary for test
             companyTxt.setText("Firma: WSB");  //temporary for test
             panelTxt.setText("Panel: Wykład Profesora Mrożka");  //temporary for test
@@ -117,13 +119,11 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
             SimpleDateFormat dateformat = new SimpleDateFormat("dd-MMM-yyyy hh:mm:ss aa"); //temporary for test
             String datetime = dateformat.format(c.getTime()); //temporary for test
             timeTxt.setText("Czas: " + datetime);//temporary for test
-
             afterScanLayout.setVisibility(View.VISIBLE);   //temporary for test
         }
 
         if(v.getId()==R.id.cancel_button){
             scanTxt.setText(getString(R.string.user_data_label_scan));
-            scanTxt.setTextColor(getResources().getColor(R.color.buttonTextDefault));
 
             personTxt.setText("");
             companyTxt.setText("");
@@ -189,7 +189,6 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
             toast.show();
 
             scanTxt.setText(getString(R.string.user_data_label_scan));
-            scanTxt.setTextColor(getResources().getColor(R.color.buttonTextDefault));
 
             personTxt.setText("");
             companyTxt.setText("");
@@ -282,7 +281,6 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
                         }
                         jsonReader.close();
                         scanTxt.setText(getString(R.string.user_data_label));
-                        scanTxt.setTextColor(getResources().getColor(R.color.textDefault));
                         personTxt.setText("Uczestnik: " + first_name + " " + last_name);
                         companyTxt.setText("Firma: " + company_name);
                         panelTxt.setText("Wydarzenie: " + event_name);
@@ -301,20 +299,6 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
                 }
             });
 */
-
-            scanTxt.setText(getString(R.string.user_data_label));  //temporary for test
-            scanTxt.setTextColor(getResources().getColor(R.color.textDefault));//temporary for test
-
-            personTxt.setText("Uczestnik: Jan Kowalski");  //temporary for test
-            companyTxt.setText("Firma: WSB");  //temporary for test
-            panelTxt.setText("Panel: Wykład Profesora Mrożka");  //temporary for test
-            wasInPastTxt.setText("Witaj ponownie!");  //temporary for test
-            Calendar c = Calendar.getInstance(); //temporary for test
-            SimpleDateFormat dateformat = new SimpleDateFormat("dd-MMM-yyyy hh:mm:ss aa"); //temporary for test
-            String datetime = dateformat.format(c.getTime()); //temporary for test
-            timeTxt.setText("Czas: " + datetime);//temporary for test
-
-            afterScanLayout.setVisibility(View.VISIBLE);   //temporary for test
         }
         else{
             Toast toast = Toast.makeText(getApplicationContext(),

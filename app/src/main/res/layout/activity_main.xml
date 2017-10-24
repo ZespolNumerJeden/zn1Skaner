@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context="com.example.rick.agileitticket.MainActivity">
 
     <include
-        android:id="@+id/tool_bar"
+        android:id="@+id/main_tool_bar"
         layout="@layout/toolbar_layout"
         ></include>
 
@@ -146,6 +146,17 @@
             android:onClick="onClick"
             android:text="@string/scan"
             android:layout_above="@+id/footer"/>
+
+    <Button
+        android:id="@+id/agenda_button"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_centerHorizontal="true"
+        android:layout_weight="0.6"
+        android:background="@drawable/button_border"
+        android:onClick="onClick"
+        android:text="Agenda"
+        android:layout_above="@+id/scan_button"/>
 
         <TextView
         android:id="@+id/footer"

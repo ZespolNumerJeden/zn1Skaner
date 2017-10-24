@@ -1,42 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:title="@string/app_name"
     android:id="@+id/my_toolbar"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:minHeight="?attr/actionBarSize"
-    app:titleMarginStart="20dp"
-    android:paddingRight="10dp"
+    android:layout_height="?attr/actionBarSize"
     android:background="@color/colorPrimary"
     android:elevation="4dp"
     android:theme="@style/ToolbarTheme"
-    app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
-
-    <Button
-        android:id="@+id/action_back"
-        android:layout_width="30sp"
-        android:layout_height="30sp"
-        android:text="@string/scanner_item_name"
-        android:background="@drawable/barcode_icon"
-        android:layout_gravity="left"
-        />
-
-    <TextView
-        android:id="@+id/toolbar_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="@string/app_name"
-        android:textSize="30sp"
-        android:gravity="center"/>
-
-    <Button
-        android:id="@+id/action_agenda"
-        android:layout_width="30sp"
-        android:layout_height="30sp"
-        android:text="@string/agenda_item_name"
-        android:layout_gravity="right"
-        android:background="@drawable/agenda_icon"
-        />
-
-    </android.support.v7.widget.Toolbar>
+    app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
