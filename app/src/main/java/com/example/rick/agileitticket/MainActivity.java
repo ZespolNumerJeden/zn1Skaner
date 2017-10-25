@@ -45,6 +45,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
         setContentView(R.layout.activity_main);
         Toolbar myToolbar = (Toolbar) findViewById(R.id.main_tool_bar);
         setSupportActionBar(myToolbar);
+        getSupportActionBar().setTitle(getString(R.string.app_name));
 
         Fabric.with(this, new Crashlytics(), new CrashlyticsNdk());
 
@@ -78,24 +79,6 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
         wasInPastTxt.setText("");
         timeTxt.setText("");
         allRightsTxt.setText(getString(R.string.allRights));
-    }
-
-   @Override
-   public boolean onCreateOptionsMenu(Menu menu) {
-      getMenuInflater().inflate(R.menu.main_menu, menu);
-      return super.onCreateOptionsMenu(menu);
-   }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_agenda:
-                Intent i = new Intent(MainActivity.this,AgendaActivity.class);
-                startActivity(i);
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
     }
 
     public void onClick(View v){

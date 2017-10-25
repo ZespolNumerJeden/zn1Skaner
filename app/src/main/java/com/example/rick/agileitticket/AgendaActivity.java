@@ -26,6 +26,7 @@ public class AgendaActivity extends AppCompatActivity {
         Toolbar myToolbar = (Toolbar) findViewById(R.id.tool_bar);
         setSupportActionBar(myToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle(getString(R.string.agenda_item_name));
 
         WebView myWebView = (WebView) findViewById(R.id.agenda_webview);
         myWebView.setWebViewClient(new MyWebViewClient());
@@ -34,24 +35,24 @@ public class AgendaActivity extends AppCompatActivity {
         myWebView.loadUrl(getString(R.string.agenda_url));
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main_menu, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
+   // @Override
+   // public boolean onCreateOptionsMenu(Menu menu) {
+   //     getMenuInflater().inflate(R.menu.main_menu, menu);
+   //     return super.onCreateOptionsMenu(menu);
+   // }
 
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_agenda:
-                Intent i = new Intent(AgendaActivity.this,MainActivity.class);
-                startActivity(i);
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
+    //@Override
+    //public boolean onOptionsItemSelected(MenuItem item) {
+     //   switch (item.getItemId()) {
+     //       case R.id.action_agenda:
+     //           Intent i = new Intent(AgendaActivity.this,MainActivity.class);
+     //           startActivity(i);
+     //           return true;
+     //       default:
+     //           return super.onOptionsItemSelected(item);
+     //   }
+   // }
 
     private class MyWebViewClient extends WebViewClient {
         @Override
