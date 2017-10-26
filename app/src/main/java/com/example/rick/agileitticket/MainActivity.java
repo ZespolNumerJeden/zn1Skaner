@@ -70,8 +70,8 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
         panelTxt = (TextView)findViewById(R.id.scan_event);
         wasInPastTxt = (TextView)findViewById(R.id.scan_was_in_past);
         timeTxt = (TextView)findViewById(R.id.scan_time);
-
         allRightsTxt = (TextView)findViewById(R.id.footer);
+
         scanTxt.setText(getString(R.string.user_data_label_scan));
         personTxt.setText("");
         companyTxt.setText("");
