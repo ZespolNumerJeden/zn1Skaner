@@ -106,6 +106,10 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
         }
 
         if(v.getId()==R.id.cancel_button){
+            Toast toast = Toast.makeText(getApplicationContext(),
+                    getString(R.string.codeCanceled), Toast.LENGTH_SHORT);
+            toast.show();
+
             scanTxt.setText(getString(R.string.user_data_label_scan));
 
             personTxt.setText("");

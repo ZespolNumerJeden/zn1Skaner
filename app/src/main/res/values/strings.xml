@@ -14,6 +14,7 @@
     <string name="apiError">Nieoczekiwany błąd połączenia z bazą</string>
     <string name="codeEmpty">Nie znaleziono biletu</string>
     <string name="codeAccepted">Oznaczono obecność uczestnika</string>
+    <string name="codeCanceled">Anulowano skan</string>
     <string name="codeAlreadyPresent">Uczestnik już oznaczył swoją obecność</string>
 
 
