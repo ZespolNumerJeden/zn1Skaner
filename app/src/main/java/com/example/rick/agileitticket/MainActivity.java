@@ -92,17 +92,6 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
             IntentIntegrator scanIntegrator = new IntentIntegrator(this);
             scanIntegrator.initiateScan();
             scanBtn.setVisibility(View.INVISIBLE);
-
-            scanTxt.setText(getString(R.string.user_data_label));  //temporary for test
-            personTxt.setText("Uczestnik: Jan Kowalski");  //temporary for test
-            companyTxt.setText("Firma: WSB");  //temporary for test
-            panelTxt.setText("Panel: Wykład Profesora Mrożka");  //temporary for test
-            wasInPastTxt.setText("Witaj ponownie!");  //temporary for test
-            Calendar c = Calendar.getInstance(); //temporary for test
-            SimpleDateFormat dateformat = new SimpleDateFormat("dd-MMM-yyyy hh:mm:ss aa"); //temporary for test
-            String datetime = dateformat.format(c.getTime()); //temporary for test
-            timeTxt.setText("Czas: " + datetime);//temporary for test
-            afterScanLayout.setVisibility(View.VISIBLE);   //temporary for test
         }
 
         if(v.getId()==R.id.cancel_button){
@@ -123,26 +112,28 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
         }
 
         if(v.getId()==R.id.approve_button){
-            /*//get is present from globals
+            //get is present from globals
             if (is_present == "true"){
                 Toast toast = Toast.makeText(getApplicationContext(),
                         getString(R.string.codeAlreadyPresent), Toast.LENGTH_SHORT);
                 toast.show();
             }
             else {
+                final String api_url = getString(R.string.api_url);
+                final String url = api_url + scanContent;
                 //send is present = true here
                 AsyncTask.execute(new Runnable() {
                     @Override
                     public void run() {
                         // Create URL
-                        URL apiEndpoint = new URL(getString(R.urls.api_url));
+                        URL apiEndpoint = new URL(url);
                         //set cache
                         HttpResponseCache myCache = HttpResponseCache.install(getCacheDir(), 100000L);
                         // Create connection
                         HttpsURLConnection getDataConnection = (HttpsURLConnection) apiEndpoint.openConnection();
                         // Set headers
-                        getDataConnection.setRequestProperty("someheader", scanContent);
-                        getDataConnection.setRequestProperty("is_present", "true");
+                        getDataConnection.setRequestProperty("apiKey", getString(R.string.api_key));
+                        getDataConnection.setRequestProperty("IsPresent", True);
                         // Check response
                         if (getDataConnection.getResponseCode() == 200) {
                             //display proper toast message
@@ -169,22 +160,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
                     }
                 });
             }
-*/
 
-            Toast toast = Toast.makeText(getApplicationContext(),
-                    getString(R.string.codeAccepted), Toast.LENGTH_SHORT);
-            toast.show();
-
-            scanTxt.setText(getString(R.string.user_data_label_scan));
-
-            personTxt.setText("");
-            companyTxt.setText("");
-            panelTxt.setText("");
-            wasInPastTxt.setText("");
-            timeTxt.setText("");
-
-            afterScanLayout.setVisibility(View.INVISIBLE);
-            scanBtn.setVisibility(View.VISIBLE);
         }
 
     }
@@ -194,21 +170,23 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
         IntentResult scanningResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
         if (scanningResult != null) {
 //we have a result
-            String scanContent = scanningResult.getContents();
-/*
+            final String scanContent = scanningResult.getContents();
+            final String api_url = getString(R.string.api_url);
+            final String url = api_url + scanContent;
+
 
             //API CALLS HERE
             AsyncTask.execute(new Runnable() {
                 @Override
                 public void run() {
                     // Create URL
-                    URL apiEndpoint = new URL(getString(R.urls.api_url));
+                    URL apiEndpoint = new URL(url));
                     //set cache
                     HttpResponseCache myCache = HttpResponseCache.install(getCacheDir(), 100000L);
                     // Create connection
                     HttpsURLConnection getDataConnection = (HttpsURLConnection) apiEndpoint.openConnection();
                     // Set headers
-                    getDataConnection.setRequestProperty("User-Agent", scanContent);
+                    getDataConnection.setRequestProperty("apiKey", (R.urls.api_key));
                     // Check response
                     if (getDataConnection.getResponseCode() == 200) {
                         // On success
@@ -285,7 +263,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
                     getDataConnection.disconnect();
                 }
             });
-*/
+
         }
         else{
             Toast toast = Toast.makeText(getApplicationContext(),

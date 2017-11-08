@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="api_url">abc</string>
+    <string name="api_url">http://ogarnij-agile.azurewebsites.net/api/ticket/</string>
+    <string name="api_key">abcd</string>
     <string name="agenda_url">http://ogarnij-agile.azurewebsites.net/Home/Agenda?mobile=true</string>
 </resources>
