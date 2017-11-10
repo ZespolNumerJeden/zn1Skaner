@@ -10,6 +10,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import com.crashlytics.android.Crashlytics;
 import com.crashlytics.android.ndk.CrashlyticsNdk;
+import com.example.rick.agileitticket.android.Global;
 import com.example.rick.agileitticket.android.IntentIntegrator;
 import com.example.rick.agileitticket.android.IntentResult;
 import android.app.Activity;
@@ -31,6 +32,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import javax.net.ssl.HttpsURLConnection;
+
 
 public class MainActivity extends AppCompatActivity implements OnClickListener {
 
@@ -113,14 +115,21 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
 
         if(v.getId()==R.id.approve_button){
             //get is present from globals
-            if (is_present == "true"){
+            String is_present = Global.presence;
+            String scanContent = Global.ticket;
+
+            final String api_url = getString(R.string.api_url);
+            final String ticketId = scanContent;
+            final String url = api_url + ticketId;
+
+
+            if (is_present == "True") {
                 Toast toast = Toast.makeText(getApplicationContext(),
                         getString(R.string.codeAlreadyPresent), Toast.LENGTH_SHORT);
                 toast.show();
             }
             else {
-                final String api_url = getString(R.string.api_url);
-                final String url = api_url + scanContent;
+
                 //send is present = true here
                 AsyncTask.execute(new Runnable() {
                     @Override
@@ -133,7 +142,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
                         HttpsURLConnection getDataConnection = (HttpsURLConnection) apiEndpoint.openConnection();
                         // Set headers
                         getDataConnection.setRequestProperty("apiKey", getString(R.string.api_key));
-                        getDataConnection.setRequestProperty("IsPresent", True);
+                        getDataConnection.setRequestProperty("IsPresent", "True");
                         // Check response
                         if (getDataConnection.getResponseCode() == 200) {
                             //display proper toast message
@@ -150,6 +159,9 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
 
                             afterScanLayout.setVisibility(View.INVISIBLE);
                             scanBtn.setVisibility(View.VISIBLE);
+
+                            Global.presence = "";
+                            Global.ticket = "";
                         }
                         else {
                             Toast toast = Toast.makeText(getApplicationContext(),
@@ -171,8 +183,10 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
         if (scanningResult != null) {
 //we have a result
             final String scanContent = scanningResult.getContents();
+            Global.ticket = scanContent;
             final String api_url = getString(R.string.api_url);
             final String url = api_url + scanContent;
+
 
 
             //API CALLS HERE
@@ -200,44 +214,45 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
                         jsonReader.beginObject(); // Start processing the JSON object
                         while (jsonReader.hasNext()) { // Loop through all keys
                             String key = jsonReader.nextName(); // Fetch the next key
-                            if (key.equals("first_name")) { // Check if desired key
+                            if (key.equals("FirstName")) { // Check if desired key
                                 // Fetch the value as a String
-                                String first_name = jsonReader.nextString();
+                                final String first_name = jsonReader.nextString();
                                 //assign to global
                             }
-                            if (key.equals("last_name")) { // Check if desired key
+                            if (key.equals("LastName")) { // Check if desired key
                                 // Fetch the value as a String
-                                String last_name = jsonReader.nextString();
+                                final String last_name = jsonReader.nextString();
                                 //assign to global
                             }
-                            if (key.equals("company_name")) { // Check if desired key
+                            if (key.equals("CompanyName")) { // Check if desired key
                                 // Fetch the value as a String
-                                String company_name = jsonReader.nextString();
+                                final String company_name = jsonReader.nextString();
                                 //assign to global
                             }
-                            if (key.equals("event_name")) { // Check if desired key
+                            if (key.equals("EventName")) { // Check if desired key
                                 // Fetch the value as a String
-                                String event_name = jsonReader.nextString();
+                                final String event_name = jsonReader.nextString();
                                 //assign to global
                             }
-                            if (key.equals("event_date")) { // Check if desired key
+                            if (key.equals("EventDate")) { // Check if desired key
                                 // Fetch the value as a String
-                                String event_date = jsonReader.nextString();
+                                final String event_date = jsonReader.nextString();
                                 //assign to global
                             }
-                            if (key.equals("event_time")) { // Check if desired key
+                            if (key.equals("EventTime")) { // Check if desired key
                                 // Fetch the value as a String
-                                String event_time = jsonReader.nextString();
+                                final String event_time = jsonReader.nextString();
                                 //assign to global
                             }
-                            if (key.equals("is_present")) { // Check if desired key
+                            if (key.equals("IsPresent")) { // Check if desired key
                                 // Fetch the value as a String
-                                String is_present = jsonReader.nextString();
+                                final String is_present = jsonReader.nextString();
+                                Global.presence = is_present;
                                 //assign to global
                             }
-                            if (key.equals("was_in_past")) { // Check if desired key
+                            if (key.equals("WasInPast")) { // Check if desired key
                                 // Fetch the value as a String
-                                String was_in_past = jsonReader.nextString();
+                                final String was_in_past = jsonReader.nextString();
                                 //assign to global
                             }
                             else {
@@ -259,6 +274,9 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
                         Toast toast = Toast.makeText(getApplicationContext(),
                                 getString(R.string.apiError), Toast.LENGTH_SHORT);
                         toast.show();
+
+                        Global.presence = "";
+                        Global.ticket = "";
                     }
                     getDataConnection.disconnect();
                 }
@@ -279,6 +297,9 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
 
             afterScanLayout.setVisibility(View.INVISIBLE);
             scanBtn.setVisibility(View.VISIBLE);
+
+            Global.presence = "";
+            Global.ticket = "";
         }
     }
 
