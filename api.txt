@@ -1,0 +1,42 @@
+public interface ApiInterface {
+String id = Global.ticket;
+  @FormUrlEncoded
+@Headers({
+    "content-type: application/json",
+    "apiKey: Retrofit-Sample-App"
+})
+  @GET("/api/ticket/{id}")
+Call<Result> checkLevel(@Field("id") String id);
+}
+
+String scanContent = Global.ticket;
+
+                    final String api_url = getString(R.string.api_url);
+                    final String ticketId = scanContent;
+                    final String url = api_url + ticketId;
+
+Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(url)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        Api api = retrofit.create(Api.class);
+        Call<Result> call = api.checkLevel(1);
+        call.enqueue(new Callback<Result>() {
+            @Override
+            public void onResponse(Call<Result> call, Response<Result> response) {
+                response.body();
+                String first_name =response.body().getFirstName();
+                String last_name = response.body().getLastName();
+                String company_name = response.body().getCompanyName();
+                String event_name = response.body().getEventName();
+                String event_date = response.body().getEventDate();
+String event_time = response.body().getEventTime();
+Boolean was_in_past = response.body().getWasInPast();
+Boolean is_present = response.body().setIsPresent();
+            }
+
+            @Override
+            public void onFailure(Call<Result> call, Throwable t) {
+            }
+        });
+

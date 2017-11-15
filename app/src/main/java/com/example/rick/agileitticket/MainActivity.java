@@ -2,11 +2,25 @@ package com.example.rick.agileitticket;
 
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 
+import java.io.IOException;
+import java.io.InputStream;
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.protocol.BasicHttpContext;
+import org.apache.http.protocol.HttpContext;
+
 import android.net.http.HttpResponseCache;
 import android.os.AsyncTask;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 import android.os.Bundle;
 import com.crashlytics.android.Crashlytics;
 import com.crashlytics.android.ndk.CrashlyticsNdk;
@@ -27,6 +41,17 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 import io.fabric.sdk.android.Fabric;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.http.Field;
+import retrofit2.Call;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.http.Body;
+import retrofit2.http.Multipart;
+import retrofit2.http.POST;
+import retrofit2.http.Part;
+import retrofit2.http.PartMap;
 import java.util.Calendar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.ActionBarActivity;
@@ -115,37 +140,17 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
 
         if(v.getId()==R.id.approve_button){
             //get is present from globals
-            String is_present = Global.presence;
-            String scanContent = Global.ticket;
+            Boolean is_present = Global.presence;
 
-            final String api_url = getString(R.string.api_url);
-            final String ticketId = scanContent;
-            final String url = api_url + ticketId;
-
-
-            if (is_present == "True") {
+            if (is_present == true) {
                 Toast toast = Toast.makeText(getApplicationContext(),
                         getString(R.string.codeAlreadyPresent), Toast.LENGTH_SHORT);
                 toast.show();
             }
             else {
 
-                //send is present = true here
-                AsyncTask.execute(new Runnable() {
-                    @Override
-                    public void run() {
-                        // Create URL
-                        URL apiEndpoint = new URL(url);
-                        //set cache
-                        HttpResponseCache myCache = HttpResponseCache.install(getCacheDir(), 100000L);
-                        // Create connection
-                        HttpsURLConnection getDataConnection = (HttpsURLConnection) apiEndpoint.openConnection();
-                        // Set headers
-                        getDataConnection.setRequestProperty("apiKey", getString(R.string.api_key));
-                        getDataConnection.setRequestProperty("IsPresent", "True");
-                        // Check response
-                        if (getDataConnection.getResponseCode() == 200) {
-                            //display proper toast message
+
+                            //display proper toast message for 200 response
                             Toast toast = Toast.makeText(getApplicationContext(),
                                     getString(R.string.codeAccepted), Toast.LENGTH_SHORT);
                             toast.show();
@@ -160,17 +165,13 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
                             afterScanLayout.setVisibility(View.INVISIBLE);
                             scanBtn.setVisibility(View.VISIBLE);
 
-                            Global.presence = "";
-                            Global.ticket = "";
-                        }
-                        else {
+                            Global.presence = null;
+                            Global.ticket = null;
+                        //or any other response
                             Toast toast = Toast.makeText(getApplicationContext(),
                                     getString(R.string.apiError), Toast.LENGTH_SHORT);
                             toast.show();
-                        }
-                        getDataConnection.disconnect();
-                    }
-                });
+
             }
 
         }
@@ -188,119 +189,73 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
             final String url = api_url + scanContent;
 
 
-
             //API CALLS HERE
-            AsyncTask.execute(new Runnable() {
+            ApiInterface retrofit = ApiInterface.retrofit.create(ApiInterface.class);
+
+            ApiClientResponse apiCall = retrofit.create(ApiClientResponse.class);
+           // Call<ApiClient> call = api.getId("");
+            apiCall.enqueue(new Callback<ApiClientResponse>() {
                 @Override
-                public void run() {
-                    // Create URL
-                    URL apiEndpoint = new URL(url));
-                    //set cache
-                    HttpResponseCache myCache = HttpResponseCache.install(getCacheDir(), 100000L);
-                    // Create connection
-                    HttpsURLConnection getDataConnection = (HttpsURLConnection) apiEndpoint.openConnection();
-                    // Set headers
-                    getDataConnection.setRequestProperty("apiKey", (R.urls.api_key));
-                    // Check response
-                    if (getDataConnection.getResponseCode() == 200) {
-                        // On success
-                        //Get response json
-                        InputStream responseBody = getDataConnection.getInputStream();
-                        InputStreamReader responseBodyReader =
-                                new InputStreamReader(responseBody, "UTF-8");
-                        //Analyze response
-                        JsonReader jsonReader = new JsonReader(responseBodyReader);
-                        //Save values to global variables
-                        jsonReader.beginObject(); // Start processing the JSON object
-                        while (jsonReader.hasNext()) { // Loop through all keys
-                            String key = jsonReader.nextName(); // Fetch the next key
-                            if (key.equals("FirstName")) { // Check if desired key
-                                // Fetch the value as a String
-                                final String first_name = jsonReader.nextString();
-                                //assign to global
-                            }
-                            if (key.equals("LastName")) { // Check if desired key
-                                // Fetch the value as a String
-                                final String last_name = jsonReader.nextString();
-                                //assign to global
-                            }
-                            if (key.equals("CompanyName")) { // Check if desired key
-                                // Fetch the value as a String
-                                final String company_name = jsonReader.nextString();
-                                //assign to global
-                            }
-                            if (key.equals("EventName")) { // Check if desired key
-                                // Fetch the value as a String
-                                final String event_name = jsonReader.nextString();
-                                //assign to global
-                            }
-                            if (key.equals("EventDate")) { // Check if desired key
-                                // Fetch the value as a String
-                                final String event_date = jsonReader.nextString();
-                                //assign to global
-                            }
-                            if (key.equals("EventTime")) { // Check if desired key
-                                // Fetch the value as a String
-                                final String event_time = jsonReader.nextString();
-                                //assign to global
-                            }
-                            if (key.equals("IsPresent")) { // Check if desired key
-                                // Fetch the value as a String
-                                final String is_present = jsonReader.nextString();
-                                Global.presence = is_present;
-                                //assign to global
-                            }
-                            if (key.equals("WasInPast")) { // Check if desired key
-                                // Fetch the value as a String
-                                final String was_in_past = jsonReader.nextString();
-                                //assign to global
-                            }
-                            else {
-                                jsonReader.skipValue(); // Skip values of other keys
-                            }
-                        }
-                        jsonReader.close();
-                        scanTxt.setText(getString(R.string.user_data_label));
-                        personTxt.setText("Uczestnik: " + first_name + " " + last_name);
-                        companyTxt.setText("Firma: " + company_name);
-                        panelTxt.setText("Wydarzenie: " + event_name);
-                        timeTxt.setText("Czas: " + event_date + ", " + event_time);
-                        if (was_in_past != null) {
-                            wasInPastTxt.setText(getString(R.string.welcomeBack));
-                        }
-                        afterScanLayout.setVisibility(View.VISIBLE);
+                public void onResponse(Call<ApiClientResponse> call, Response<ApiClientResponse> response) {
+                    response.body();
+                    String first_name = response.body().getFirstName();
+                    String last_name = response.body().getLastName();
+                    String company_name = response.body().getCompanyName();
+                    String event_name = response.body().getEventName();
+                    String event_date = response.body().getEventDate();
+                    String event_time = response.body().getEventTime();
+                    Boolean was_in_past = response.body().getWasInPast();
+                    Boolean is_present = response.body().getIsPresent();
+                    Global.presence = is_present;
 
-                    } else {
-                        Toast toast = Toast.makeText(getApplicationContext(),
-                                getString(R.string.apiError), Toast.LENGTH_SHORT);
-                        toast.show();
-
-                        Global.presence = "";
-                        Global.ticket = "";
+                    scanTxt.setText(getString(R.string.user_data_label));
+                    personTxt.setText("Uczestnik: " + first_name + " " + last_name);
+                    companyTxt.setText("Firma: " + company_name);
+                    panelTxt.setText("Wydarzenie: " + event_name);
+                    timeTxt.setText("Czas: " + event_date + ", " + event_time);
+                    if (was_in_past == true) {
+                        wasInPastTxt.setText(getString(R.string.welcomeBack));
                     }
-                    getDataConnection.disconnect();
+                    afterScanLayout.setVisibility(View.VISIBLE);
+
                 }
+
+                @Override
+                public void onFailure(Call<ApiClientResponse> call, Throwable t) {
+
+                    Toast toast = Toast.makeText(getApplicationContext(),
+                            getString(R.string.apiError), Toast.LENGTH_SHORT);
+                    toast.show();
+
+                    Global.presence = null;
+                    Global.ticket = null;
+                }
+
             });
-
-        }
-        else{
-            Toast toast = Toast.makeText(getApplicationContext(),
-                    getString(R.string.codeError), Toast.LENGTH_SHORT);
-            toast.show();
-
-            scanTxt.setText(getString(R.string.user_data_label_scan));
-            personTxt.setText("");
-            companyTxt.setText("");
-            panelTxt.setText("");
-            wasInPastTxt.setText("");
-            timeTxt.setText("");
-
-            afterScanLayout.setVisibility(View.INVISIBLE);
-            scanBtn.setVisibility(View.VISIBLE);
-
-            Global.presence = "";
-            Global.ticket = "";
-        }
     }
+
+
+
+
+
+ else{
+                Toast toast = Toast.makeText(getApplicationContext(),
+                        getString(R.string.codeError), Toast.LENGTH_SHORT);
+                toast.show();
+
+                scanTxt.setText(getString(R.string.user_data_label_scan));
+                personTxt.setText("");
+                companyTxt.setText("");
+                panelTxt.setText("");
+                wasInPastTxt.setText("");
+                timeTxt.setText("");
+
+                afterScanLayout.setVisibility(View.INVISIBLE);
+                scanBtn.setVisibility(View.VISIBLE);
+
+                Global.presence = null;
+                Global.ticket = null;
+
+        }
 
 }
