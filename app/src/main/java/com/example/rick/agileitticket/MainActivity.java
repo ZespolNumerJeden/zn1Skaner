@@ -18,6 +18,8 @@ import org.apache.http.protocol.HttpContext;
 
 import android.net.http.HttpResponseCache;
 import android.os.AsyncTask;
+
+import com.example.rick.agileitticket.models.ApiResponse;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -45,6 +47,8 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.Field;
 import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.Body;
@@ -149,29 +153,44 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
             }
             else {
 
+                APIInterface apiInterface = APIClient.getClient().create(APIInterface.class);
+                //API CALLS HERE
+                Call call = apiInterface.setIsPresent(is_present);
+                call.enqueue(new Callback() {
+                    @Override
+                    public void onResponse(Call call, Response response) {
+                        ApiResponse response.body();
+                        Toast toast = Toast.makeText(getApplicationContext(),
+                                getString(R.string.codeAccepted), Toast.LENGTH_SHORT);
+                        toast.show();
+                        scanTxt.setText(getString(R.string.user_data_label_scan));
+                        scanTxt.setText("");
+                        personTxt.setText("");
+                        companyTxt.setText("");
+                        panelTxt.setText("");
+                        wasInPastTxt.setText("");
+                        timeTxt.setText("");
 
-                            //display proper toast message for 200 response
-                            Toast toast = Toast.makeText(getApplicationContext(),
-                                    getString(R.string.codeAccepted), Toast.LENGTH_SHORT);
-                            toast.show();
-                            scanTxt.setText(getString(R.string.user_data_label_scan));
-                            scanTxt.setText("");
-                            personTxt.setText("");
-                            companyTxt.setText("");
-                            panelTxt.setText("");
-                            wasInPastTxt.setText("");
-                            timeTxt.setText("");
+                        afterScanLayout.setVisibility(View.INVISIBLE);
+                        scanBtn.setVisibility(View.VISIBLE);
 
-                            afterScanLayout.setVisibility(View.INVISIBLE);
-                            scanBtn.setVisibility(View.VISIBLE);
+                        Global.presence = null;
+                        Global.ticket = null;
 
-                            Global.presence = null;
-                            Global.ticket = null;
-                        //or any other response
-                            Toast toast = Toast.makeText(getApplicationContext(),
-                                    getString(R.string.apiError), Toast.LENGTH_SHORT);
-                            toast.show();
+                    }
 
+                    @Override
+                    public void onFailure(Call call, Throwable t) {
+                        call.cancel();
+                        Toast toast = Toast.makeText(getApplicationContext(),
+                                getString(R.string.apiError), Toast.LENGTH_SHORT);
+                        toast.show();
+
+                        Global.presence = null;
+                        Global.ticket = null;
+                    }
+
+                });
             }
 
         }
@@ -185,19 +204,16 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
 //we have a result
             final String scanContent = scanningResult.getContents();
             Global.ticket = scanContent;
-            final String api_url = getString(R.string.api_url);
-            final String url = api_url + scanContent;
 
 
+
+            APIInterface apiInterface = APIClient.getClient().create(APIInterface.class);
             //API CALLS HERE
-            ApiInterface retrofit = ApiInterface.retrofit.create(ApiInterface.class);
-
-            ApiClientResponse apiCall = retrofit.create(ApiClientResponse.class);
-           // Call<ApiClient> call = api.getId("");
-            apiCall.enqueue(new Callback<ApiClientResponse>() {
+            Call call = apiInterface.getId(scanContent);
+            call.enqueue(new Callback() {
                 @Override
-                public void onResponse(Call<ApiClientResponse> call, Response<ApiClientResponse> response) {
-                    response.body();
+                public void onResponse(Call call, Response response) {
+                    ApiResponse response.body();
                     String first_name = response.body().getFirstName();
                     String last_name = response.body().getLastName();
                     String company_name = response.body().getCompanyName();
@@ -221,8 +237,8 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
                 }
 
                 @Override
-                public void onFailure(Call<ApiClientResponse> call, Throwable t) {
-
+                public void onFailure(Call call, Throwable t) {
+                    call.cancel();
                     Toast toast = Toast.makeText(getApplicationContext(),
                             getString(R.string.apiError), Toast.LENGTH_SHORT);
                     toast.show();

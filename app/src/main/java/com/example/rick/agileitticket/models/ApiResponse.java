@@ -1,12 +1,10 @@
-package com.example.rick.agileitticket;
-import com.example.rick.agileitticket.android.Global;
+package com.example.rick.agileitticket.models;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
-import retrofit2.http.Field;
-
-public class ApiClientResponse {
+public class ApiResponse {
 
     @SerializedName("Id")
     @Expose
@@ -31,10 +29,10 @@ public class ApiClientResponse {
     private String eventName;
     @SerializedName("WasInPast")
     @Expose
-    private Boolean wasInPast;
+    private boolean wasInPast;
     @SerializedName("IsPresent")
     @Expose
-    private Boolean isPresent;
+    private boolean isPresent;
 
     public String getId() {
         return id;
@@ -92,19 +90,19 @@ public class ApiClientResponse {
         this.eventName = eventName;
     }
 
-    public Boolean getWasInPast() {
+    public boolean isWasInPast() {
         return wasInPast;
     }
 
-    public void setWasInPast(Boolean wasInPast) {
+    public void setWasInPast(boolean wasInPast) {
         this.wasInPast = wasInPast;
     }
 
-    public Boolean getIsPresent() {
+    public boolean isIsPresent() {
         return isPresent;
     }
 
-    public void setIsPresent(Boolean isPresent) {
+    public void setIsPresent(boolean isPresent) {
         this.isPresent = isPresent;
     }
 
