@@ -68,6 +68,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
     private Button scanBtn, cancelBtn, approveBtn;
     private TextView scanTxt, personTxt, companyTxt, panelTxt, wasInPastTxt, timeTxt, allRightsTxt;
     private View afterScanLayout, logo;
+    APIInterface apiInterface;
 
 
     @Override
@@ -110,6 +111,8 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
         wasInPastTxt.setText("");
         timeTxt.setText("");
         allRightsTxt.setText(getString(R.string.allRights));
+
+        apiInterface = APIClient.getClient().create(APIInterface.class);
     }
 
     public void onClick(View v){
@@ -145,6 +148,8 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
         if(v.getId()==R.id.approve_button){
             //get is present from globals
             Boolean is_present = Global.presence;
+            Boolean was_in_past = true;
+            String ticket = Global.ticket;
 
             if (is_present == true) {
                 Toast toast = Toast.makeText(getApplicationContext(),
@@ -152,14 +157,12 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
                 toast.show();
             }
             else {
-
-                APIInterface apiInterface = APIClient.getClient().create(APIInterface.class);
                 //API CALLS HERE
-                Call call = apiInterface.setIsPresent(is_present);
-                call.enqueue(new Callback() {
+                Call<ApiResponse> call = apiInterface.setIsPresent(ticket, is_present);
+                call.enqueue(new Callback<ApiResponse>() {
                     @Override
-                    public void onResponse(Call call, Response response) {
-                        ApiResponse response.body();
+                    public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
+                        ApiResponse resource = response.body();
                         Toast toast = Toast.makeText(getApplicationContext(),
                                 getString(R.string.codeAccepted), Toast.LENGTH_SHORT);
                         toast.show();
@@ -205,23 +208,20 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
             final String scanContent = scanningResult.getContents();
             Global.ticket = scanContent;
 
-
-
-            APIInterface apiInterface = APIClient.getClient().create(APIInterface.class);
             //API CALLS HERE
-            Call call = apiInterface.getId(scanContent);
-            call.enqueue(new Callback() {
+            Call<ApiResponse> call = apiInterface.getId(scanContent);
+            call.enqueue(new Callback<ApiResponse>() {
                 @Override
-                public void onResponse(Call call, Response response) {
-                    ApiResponse response.body();
-                    String first_name = response.body().getFirstName();
-                    String last_name = response.body().getLastName();
-                    String company_name = response.body().getCompanyName();
-                    String event_name = response.body().getEventName();
-                    String event_date = response.body().getEventDate();
-                    String event_time = response.body().getEventTime();
-                    Boolean was_in_past = response.body().getWasInPast();
-                    Boolean is_present = response.body().getIsPresent();
+                public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
+                    ApiResponse resource = response.body();
+                    String first_name = resource.getFirstName();
+                    String last_name = resource.getLastName();
+                    String company_name = resource.getCompanyName();
+                    String event_name = resource.getEventName();
+                    String event_date = resource.getEventDate();
+                    String event_time = resource.getEventTime();
+                    Boolean was_in_past = resource.isWasInPast();
+                    Boolean is_present = resource.isIsPresent();
                     Global.presence = is_present;
 
                     scanTxt.setText(getString(R.string.user_data_label));
