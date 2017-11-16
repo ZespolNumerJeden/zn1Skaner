@@ -86,23 +86,23 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
         View root = afterScanLayout.getRootView();
         root.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
 
-        scanBtn = (Button)findViewById(R.id.scan_button);
+        scanBtn = (Button) findViewById(R.id.scan_button);
         scanBtn.setOnClickListener(this);
 
-        cancelBtn = (Button)findViewById(R.id.cancel_button);
+        cancelBtn = (Button) findViewById(R.id.cancel_button);
         cancelBtn.setTextColor(getResources().getColor(R.color.buttonTextBlack));
         cancelBtn.setOnClickListener(this);
 
-        approveBtn = (Button)findViewById(R.id.approve_button);
+        approveBtn = (Button) findViewById(R.id.approve_button);
         approveBtn.setOnClickListener(this);
 
-        scanTxt = (TextView)findViewById(R.id.user_data_label);
-        personTxt = (TextView)findViewById(R.id.scan_person);
-        companyTxt = (TextView)findViewById(R.id.scan_company);
-        panelTxt = (TextView)findViewById(R.id.scan_event);
-        wasInPastTxt = (TextView)findViewById(R.id.scan_was_in_past);
-        timeTxt = (TextView)findViewById(R.id.scan_time);
-        allRightsTxt = (TextView)findViewById(R.id.footer);
+        scanTxt = (TextView) findViewById(R.id.user_data_label);
+        personTxt = (TextView) findViewById(R.id.scan_person);
+        companyTxt = (TextView) findViewById(R.id.scan_company);
+        panelTxt = (TextView) findViewById(R.id.scan_event);
+        wasInPastTxt = (TextView) findViewById(R.id.scan_was_in_past);
+        timeTxt = (TextView) findViewById(R.id.scan_time);
+        allRightsTxt = (TextView) findViewById(R.id.footer);
 
         scanTxt.setText(getString(R.string.user_data_label_scan));
         personTxt.setText("");
@@ -115,20 +115,20 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
         apiInterface = APIClient.getClient().create(APIInterface.class);
     }
 
-    public void onClick(View v){
+    public void onClick(View v) {
 //respond to clicks
-        if (v.getId()==R.id.agenda_button){
+        if (v.getId() == R.id.agenda_button) {
             Intent intent = new Intent(getApplicationContext(), AgendaActivity.class);
             startActivity(intent);
         }
-        if(v.getId()==R.id.scan_button) {
+        if (v.getId() == R.id.scan_button) {
 //scan
             IntentIntegrator scanIntegrator = new IntentIntegrator(this);
             scanIntegrator.initiateScan();
             scanBtn.setVisibility(View.INVISIBLE);
         }
 
-        if(v.getId()==R.id.cancel_button){
+        if (v.getId() == R.id.cancel_button) {
             Toast toast = Toast.makeText(getApplicationContext(),
                     getString(R.string.codeCanceled), Toast.LENGTH_SHORT);
             toast.show();
@@ -145,7 +145,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
             scanBtn.setVisibility(View.VISIBLE);
         }
 
-        if(v.getId()==R.id.approve_button){
+        if (v.getId() == R.id.approve_button) {
             //get is present from globals
             Boolean is_present = Global.presence;
             Boolean was_in_past = true;
@@ -155,8 +155,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
                 Toast toast = Toast.makeText(getApplicationContext(),
                         getString(R.string.codeAlreadyPresent), Toast.LENGTH_SHORT);
                 toast.show();
-            }
-            else {
+            } else {
                 //API CALLS HERE
                 Call<ApiResponse> call = apiInterface.setIsPresent(ticket, is_present);
                 call.enqueue(new Callback<ApiResponse>() {
@@ -248,30 +247,25 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
                 }
 
             });
-    }
+        } else {
+            Toast toast = Toast.makeText(getApplicationContext(),
+                    getString(R.string.codeError), Toast.LENGTH_SHORT);
+            toast.show();
 
+            scanTxt.setText(getString(R.string.user_data_label_scan));
+            personTxt.setText("");
+            companyTxt.setText("");
+            panelTxt.setText("");
+            wasInPastTxt.setText("");
+            timeTxt.setText("");
 
+            afterScanLayout.setVisibility(View.INVISIBLE);
+            scanBtn.setVisibility(View.VISIBLE);
 
-
-
- else{
-                Toast toast = Toast.makeText(getApplicationContext(),
-                        getString(R.string.codeError), Toast.LENGTH_SHORT);
-                toast.show();
-
-                scanTxt.setText(getString(R.string.user_data_label_scan));
-                personTxt.setText("");
-                companyTxt.setText("");
-                panelTxt.setText("");
-                wasInPastTxt.setText("");
-                timeTxt.setText("");
-
-                afterScanLayout.setVisibility(View.INVISIBLE);
-                scanBtn.setVisibility(View.VISIBLE);
-
-                Global.presence = null;
-                Global.ticket = null;
+            Global.presence = null;
+            Global.ticket = null;
 
         }
 
+    }
 }
