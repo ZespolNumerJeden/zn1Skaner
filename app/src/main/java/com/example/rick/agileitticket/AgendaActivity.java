@@ -1,20 +1,12 @@
 package com.example.rick.agileitticket;
-import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
-import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.app.ActionBarActivity;
-import android.support.v7.widget.Toolbar;
 import android.webkit.WebViewClient;
 import android.widget.TextView;
 
@@ -45,25 +37,6 @@ public class AgendaActivity extends AppCompatActivity {
         webSettings.setJavaScriptEnabled(true);
         myWebView.loadUrl(getString(R.string.agenda_url));
     }
-
-   // @Override
-   // public boolean onCreateOptionsMenu(Menu menu) {
-   //     getMenuInflater().inflate(R.menu.main_menu, menu);
-   //     return super.onCreateOptionsMenu(menu);
-   // }
-
-
-    //@Override
-    //public boolean onOptionsItemSelected(MenuItem item) {
-     //   switch (item.getItemId()) {
-     //       case R.id.action_agenda:
-     //           Intent i = new Intent(AgendaActivity.this,MainActivity.class);
-     //           startActivity(i);
-     //           return true;
-     //       default:
-     //           return super.onOptionsItemSelected(item);
-     //   }
-   // }
 
     private class MyWebViewClient extends WebViewClient {
         @Override
