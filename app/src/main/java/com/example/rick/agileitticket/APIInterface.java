@@ -23,6 +23,6 @@ interface APIInterface {
     @PATCH("/api/ticket/{ticket}")
     Call<ApiResponse> setWasInPast(@Path("ticket") String ticketId, @Header("WasInPast") boolean was_in_past);
 
-    
+
 
 }
