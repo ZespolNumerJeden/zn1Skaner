@@ -83,7 +83,15 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
 //scan
             IntentIntegrator scanIntegrator = new IntentIntegrator(this);
             scanIntegrator.initiateScan();
-            scanBtn.setVisibility(View.INVISIBLE);
+
+            personTxt.setText("");
+            companyTxt.setText("");
+            panelTxt.setText("");
+            wasInPastTxt.setText("");
+            timeTxt.setText("");
+
+            afterScanLayout.setVisibility(View.INVISIBLE);
+            scanBtn.setVisibility(View.VISIBLE);
         }
 
         if (v.getId() == R.id.cancel_button) {
@@ -146,6 +154,17 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
                                 getString(R.string.apiError), Toast.LENGTH_SHORT);
                         toast.show();
 
+                        scanTxt.setText(getString(R.string.user_data_label_scan));
+                        scanTxt.setText("");
+                        personTxt.setText("");
+                        companyTxt.setText("");
+                        panelTxt.setText("");
+                        wasInPastTxt.setText("");
+                        timeTxt.setText("");
+
+                        afterScanLayout.setVisibility(View.INVISIBLE);
+                        scanBtn.setVisibility(View.VISIBLE);
+
                         Global.presence = null;
                         Global.ticket = null;
                     }
@@ -190,6 +209,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
                         wasInPastTxt.setText(getString(R.string.welcomeBack));
                     }
                     afterScanLayout.setVisibility(View.VISIBLE);
+                    scanBtn.setVisibility(View.INVISIBLE);
 
                 }
 
@@ -200,8 +220,20 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
                             getString(R.string.apiError), Toast.LENGTH_SHORT);
                     toast.show();
 
+                    scanTxt.setText(getString(R.string.user_data_label_scan));
+                    personTxt.setText("");
+                    companyTxt.setText("");
+                    panelTxt.setText("");
+                    wasInPastTxt.setText("");
+                    timeTxt.setText("");
+
+                    afterScanLayout.setVisibility(View.INVISIBLE);
+                    scanBtn.setVisibility(View.VISIBLE);
+
                     Global.presence = null;
                     Global.ticket = null;
+
+
                 }
 
             });
