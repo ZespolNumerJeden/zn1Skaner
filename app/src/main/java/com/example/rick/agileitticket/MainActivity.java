@@ -145,6 +145,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
                         Global.presence = null;
                         Global.ticket = null;
 
+                        call.cancel();
                     }
 
                     @Override
@@ -190,26 +191,51 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
                 @Override
                 public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
                     ApiResponse resource = response.body();
-                    String first_name = resource.getFirstName();
-                    String last_name = resource.getLastName();
-                    String company_name = resource.getCompanyName();
-                    String event_name = resource.getEventName();
-                    String event_date = resource.getEventDate();
-                    String event_time = resource.getEventTime();
-                    Boolean was_in_past = resource.isWasInPast();
-                    Boolean is_present = resource.isIsPresent();
-                    Global.presence = is_present;
+                    String mResponseObj = response.body().toString();
+                    if (mResponseObj.contains("Message")) {
+                        call.cancel();
+                        Toast toast = Toast.makeText(getApplicationContext(),
+                                mResponseObj, Toast.LENGTH_SHORT);
+                        toast.show();
 
-                    scanTxt.setText(getString(R.string.user_data_label));
-                    personTxt.setText("Uczestnik: " + first_name + " " + last_name);
-                    companyTxt.setText("Firma: " + company_name);
-                    panelTxt.setText("Wydarzenie: " + event_name);
-                    timeTxt.setText("Czas: " + event_date + ", " + event_time);
-                    if (was_in_past == true) {
-                        wasInPastTxt.setText(getString(R.string.welcomeBack));
+                        scanTxt.setText(getString(R.string.user_data_label_scan));
+                        scanTxt.setText("");
+                        personTxt.setText("");
+                        companyTxt.setText("");
+                        panelTxt.setText("");
+                        wasInPastTxt.setText("");
+                        timeTxt.setText("");
+
+                        afterScanLayout.setVisibility(View.INVISIBLE);
+                        scanBtn.setVisibility(View.VISIBLE);
+
+                        Global.presence = null;
+                        Global.ticket = null;
                     }
-                    afterScanLayout.setVisibility(View.VISIBLE);
-                    scanBtn.setVisibility(View.INVISIBLE);
+                    else {
+                        String first_name = resource.getFirstName();
+                        String last_name = resource.getLastName();
+                        String company_name = resource.getCompanyName();
+                        String event_name = resource.getEventName();
+                        String event_date = resource.getEventDate();
+                        String event_time = resource.getEventTime();
+                        Boolean was_in_past = resource.isWasInPast();
+                        Boolean is_present = resource.isIsPresent();
+                        Global.presence = is_present;
+
+                        scanTxt.setText(getString(R.string.user_data_label));
+                        personTxt.setText("Uczestnik: " + first_name + " " + last_name);
+                        companyTxt.setText("Firma: " + company_name);
+                        panelTxt.setText("Wydarzenie: " + event_name);
+                        timeTxt.setText("Czas: " + event_date + ", " + event_time);
+                        if (was_in_past == true) {
+                            wasInPastTxt.setText(getString(R.string.welcomeBack));
+                        }
+                        afterScanLayout.setVisibility(View.VISIBLE);
+                        scanBtn.setVisibility(View.INVISIBLE);
+
+                        call.cancel();
+                    }
 
                 }
 
