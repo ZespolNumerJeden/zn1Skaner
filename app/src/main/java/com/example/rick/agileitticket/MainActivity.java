@@ -128,24 +128,42 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
                     @Override
                     public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
                         ApiResponse resource = response.body();
-                        Toast toast = Toast.makeText(getApplicationContext(),
-                                getString(R.string.codeAccepted), Toast.LENGTH_SHORT);
-                        toast.show();
-                        scanTxt.setText(getString(R.string.user_data_label_scan));
-                        scanTxt.setText("");
-                        personTxt.setText("");
-                        companyTxt.setText("");
-                        panelTxt.setText("");
-                        wasInPastTxt.setText("");
-                        timeTxt.setText("");
+                        if (response.isSuccessful()) {
+                            Toast toast = Toast.makeText(getApplicationContext(),
+                                    getString(R.string.codeAccepted), Toast.LENGTH_SHORT);
+                            toast.show();
+                            scanTxt.setText(getString(R.string.user_data_label_scan));
+                            scanTxt.setText("");
+                            personTxt.setText("");
+                            companyTxt.setText("");
+                            panelTxt.setText("");
+                            wasInPastTxt.setText("");
+                            timeTxt.setText("");
 
-                        afterScanLayout.setVisibility(View.INVISIBLE);
-                        scanBtn.setVisibility(View.VISIBLE);
+                            afterScanLayout.setVisibility(View.INVISIBLE);
+                            scanBtn.setVisibility(View.VISIBLE);
 
-                        Global.presence = null;
-                        Global.ticket = null;
+                            Global.presence = null;
+                            Global.ticket = null;
+                        }
+                        else {
+                            Toast toast = Toast.makeText(getApplicationContext(),
+                                    getString(R.string.apiError), Toast.LENGTH_SHORT);
+                            toast.show();
+                            scanTxt.setText(getString(R.string.user_data_label_scan));
+                            scanTxt.setText("");
+                            personTxt.setText("");
+                            companyTxt.setText("");
+                            panelTxt.setText("");
+                            wasInPastTxt.setText("");
+                            timeTxt.setText("");
 
-                        call.cancel();
+                            afterScanLayout.setVisibility(View.INVISIBLE);
+                            scanBtn.setVisibility(View.VISIBLE);
+
+                            Global.presence = null;
+                            Global.ticket = null;
+                        }
                     }
 
                     @Override
@@ -191,28 +209,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
                 @Override
                 public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
                     ApiResponse resource = response.body();
-                    String mResponseObj = response.body().toString();
-                    if (mResponseObj.contains("Message")) {
-                        call.cancel();
-                        Toast toast = Toast.makeText(getApplicationContext(),
-                                mResponseObj, Toast.LENGTH_SHORT);
-                        toast.show();
-
-                        scanTxt.setText(getString(R.string.user_data_label_scan));
-                        scanTxt.setText("");
-                        personTxt.setText("");
-                        companyTxt.setText("");
-                        panelTxt.setText("");
-                        wasInPastTxt.setText("");
-                        timeTxt.setText("");
-
-                        afterScanLayout.setVisibility(View.INVISIBLE);
-                        scanBtn.setVisibility(View.VISIBLE);
-
-                        Global.presence = null;
-                        Global.ticket = null;
-                    }
-                    else {
+                    if (response.isSuccessful()) {
                         String first_name = resource.getFirstName();
                         String last_name = resource.getLastName();
                         String company_name = resource.getCompanyName();
@@ -233,8 +230,23 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
                         }
                         afterScanLayout.setVisibility(View.VISIBLE);
                         scanBtn.setVisibility(View.INVISIBLE);
+                    } else {
+                        Toast toast = Toast.makeText(getApplicationContext(),
+                                getString(R.string.codeError), Toast.LENGTH_SHORT);
+                        toast.show();
+                        scanTxt.setText(getString(R.string.user_data_label_scan));
+                        scanTxt.setText("");
+                        personTxt.setText("");
+                        companyTxt.setText("");
+                        panelTxt.setText("");
+                        wasInPastTxt.setText("");
+                        timeTxt.setText("");
 
-                        call.cancel();
+                        afterScanLayout.setVisibility(View.INVISIBLE);
+                        scanBtn.setVisibility(View.VISIBLE);
+
+                        Global.presence = null;
+                        Global.ticket = null;
                     }
 
                 }
